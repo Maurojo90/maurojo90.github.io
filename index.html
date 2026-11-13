@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Juice Log Connect</title>
+<style>
+:root{--bg:#0d171e;--card:#13202a;--fg:#e9f7f8;--muted:#8fb0bc;--acc:#36e0bd}
+@media (prefers-color-scheme:light){:root{--bg:#eef7f6;--card:#fff;--fg:#0f2a2f;--muted:#56767c;--acc:#0e9e83}}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,sans-serif;display:grid;place-items:center;min-height:100vh;padding:16px;box-sizing:border-box}
+.c{background:var(--card);border-radius:18px;padding:22px;max-width:30rem;width:100%}
+h1{font-size:1.25rem;margin:0 0 8px}p{color:var(--muted);margin:0 0 14px}
+textarea{width:100%;box-sizing:border-box;font:13px ui-monospace,Menlo,monospace;padding:10px;border-radius:10px;border:1px solid var(--muted);background:transparent;color:var(--fg);min-height:5rem}
+button{margin-top:10px;width:100%;padding:12px;border:0;border-radius:12px;background:var(--acc);color:#03241d;font-weight:700;font-size:1rem}
+</style></head><body><div class="c" id="c">
+<h1>⚡ Juice Log</h1><p>Personal Tesla charging tracker for one car. Nothing to see here.</p>
+</div>
+<script>
+const q=new URLSearchParams(location.search),code=q.get("code"),err=q.get("error");
+const c=document.getElementById("c");
+if(code){c.innerHTML='<h1>⚡ Tesla connected — one last step</h1><p>Copy this code and paste it into Juice Log → Overview → Setup → Tesla connection. It expires in a few minutes.</p><textarea id="t" readonly></textarea><button id="b">Copy code</button>';
+const t=document.getElementById("t");t.value=code;document.getElementById("b").onclick=async()=>{try{await navigator.clipboard.writeText(code);document.getElementById("b").textContent="Copied ✓"}catch(e){t.select()}}}
+else if(err){c.innerHTML='<h1>Tesla sign-in didn’t finish</h1><p></p>';c.querySelector("p").textContent=err+" — go back to the chat and try again."}
+</script></body></html>
